@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta  charset="utf-8"/>
+            <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+            
+    </head>
+<body>
+
+<h2>Text Input</h2>
+
+<form id="myform">
+    User name:
+    <input type="text" name="username">
+    <br>  
+  First name:
+  <input type="text" name="firstname">
+  <br>
+  Last name:
+  <input type="text" name="lastname">
+  <br>
+  Mobile Number:
+  <input type="text" name="mobilenumber">
+  <br>
+  Company Name:
+  <input type="text" name="companyname">
+  <br>
+  Salary:
+  <input type="text" name="Salary">
+  <br>
+  <button type="submit">save</button>
+</form>
+   
+<script>
+
+
+$("button").click(function(e){
+    e.preventDefault();
+     
+    $.post('http://127.0.0.1:8000/amarformdata/2', // url
+      // data to be submit
+    
+        {
+         "id": 2,
+         "user_info": {
+        "username": $("#myform input[name=username]").val(),
+        "last_name": $("#myform input[name=lastname]").val(),
+        "first_name": $("#myform input[name=firstname]").val(),
+        },
+    "mobile_number": $("#myform input[name=mobilenumber]").val(),
+    "professional_info": {
+        "salary": $("#myform input[name=companyname]").val(),
+        "company": $("#myform input[name=Salary]").val(),
+
+    },
+        }
+
+)}); 
+
+$.getJSON("http://127.0.0.1:8000/amarformdata/2", function(result){
+
+    // console.log(result); 
+    $("#myform input[name=username]").val(result.user_info.username);
+    $("#myform input[name=firstname]").val(result.user_info.first_name);
+    $("#myform input[name=lastname]").val(result.user_info.last_name);
+    $("#myform input[name=mobilenumber]").val(result.mobile_number);
+    $("#myform input[name=companyname]").val(result.professional_info.company);
+    $("#myform input[name=Salary]").val(result.professional_info.salary);
+
+});
+      
+
+</script>
+            
+</body>
+</html>

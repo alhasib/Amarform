@@ -3,6 +3,6 @@ from formapp.apiviews import AmarformView, AmarformDetailView
 
 urlpatterns = [
     path("amarformdata/", AmarformView.as_view()),
-    path("amarformdata/<int:id>", AmarformDetailView.as_view())
+    path("amarformdata/<int:pk>", AmarformDetailView.as_view())
 ]
 
