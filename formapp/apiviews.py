@@ -24,11 +24,11 @@ class AmarformDetailView(APIView):
         print('post')
         a = Amarform.objects.get(pk = pk)
         data = request.data
-        t = type(data)
-        print(str(t))
+        data_type = type(data)
+        
        
-        if t is dict:
-            print("masum")
+        if data_type is dict:
+           
             amarform_serializer = AmarformSerializer(a, data = data)
             if amarform_serializer.is_valid():
                 print('sabu')
@@ -37,11 +37,11 @@ class AmarformDetailView(APIView):
 
 
             else:
-                print("hh")
+                
                 return Response(amarform_serializer.errors)
             amarform = Amarform.objects.get()
             amarform_serializer = AmarformSerializer(amarform)
-            
+
         else:
             a.user_info["username"] = data['user_info[username]']
             a.user_info["first_name"] = data['user_info[first_name]']
