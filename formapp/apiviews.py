@@ -24,28 +24,32 @@ class AmarformDetailView(APIView):
         print('post')
         a = Amarform.objects.get(pk = pk)
         data = request.data
-        print(data)
+        t = type(data)
+        print(str(t))
        
-        a.user_info["username"] = data['user_info[username]']
-        a.user_info["first_name"] = data['user_info[first_name]']
-        a.user_info["last_name"] = data['user_info[last_name]']
-        a.mobile_number = data['mobile_number']
-        a.professional_info["company"] = data['professional_info[company]']
-        a.professional_info["salary"] = data['professional_info[salary]']
-        a.save()
-        
-        # amarform_serializer = AmarformSerializer(a, data = data)
-        # if amarform_serializer.is_valid():
-        #     print('sabu')
-        #     amarform_serializer.save()
-        #     return Response(amarform_serializer.data)
+        if t is dict:
+            print("masum")
+            amarform_serializer = AmarformSerializer(a, data = data)
+            if amarform_serializer.is_valid():
+                print('sabu')
+                amarform_serializer.save()
+                return Response(amarform_serializer.data)
 
 
-        # else:
-        #     print("hh")
-        #     return Response(amarform_serializer.errors)
-        # amarform = Amarform.objects.get()
-        # amarform_serializer = AmarformSerializer(amarform)
+            else:
+                print("hh")
+                return Response(amarform_serializer.errors)
+            amarform = Amarform.objects.get()
+            amarform_serializer = AmarformSerializer(amarform)
+            
+        else:
+            a.user_info["username"] = data['user_info[username]']
+            a.user_info["first_name"] = data['user_info[first_name]']
+            a.user_info["last_name"] = data['user_info[last_name]']
+            a.mobile_number = data['mobile_number']
+            a.professional_info["company"] = data['professional_info[company]']
+            a.professional_info["salary"] = data['professional_info[salary]']
+            a.save()    
         return Response({"status":"success"})             
 
 
